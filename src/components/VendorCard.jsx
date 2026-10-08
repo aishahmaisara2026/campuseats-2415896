@@ -1,28 +1,24 @@
-function VendorCard({ vendor, isSelected, onSelect }) {
+function VendorCard() {
+  const vendor = {
+    name: 'Warung Kemas',
+    location: 'Mahallah Aminah',
+    openHours: '8:00 am - 10:00 pm',
+    isOpen: true,
+ }
   return (
-    <button
-      type="button"
-      onClick={() => onSelect(vendor.id)}
-      style={{
-        border: isSelected ? '2px solid #046A38' : '1px solid #ccc',
-        borderRadius: '8px',
-        padding: '1rem',
-        margin: '0.5rem',
-        textAlign: 'left',
-        background: isSelected ? '#f0fff4' : '#fff',
-        cursor: 'pointer',
-        minWidth: '200px'
-      }}
-    >
-      <h3>{vendor.name}</h3>
-      <p>{vendor.location}</p>
-      <small>{vendor.openHours}</small>
+    <article className="card vendor-card">
+      <div className="thumb" aria-hidden="true">
+        {vendor.name.charAt(0)}
+      </div>
       <div>
-        <span style={{ color: vendor.isOpen ? 'green' : 'red', fontWeight: 'bold' }}>
+        <h2>{vendor.name}</h2>
+        <p className="muted">{vendor.location}</p>
+        <p className="muted">Open: {vendor.openHours}</p>
+        <span className={vendor.isOpen ? 'status open' : 'status closed'}>
           {vendor.isOpen ? 'Open now' : 'Closed'}
         </span>
       </div>
-    </button>
+    </article>
   )
 }
 

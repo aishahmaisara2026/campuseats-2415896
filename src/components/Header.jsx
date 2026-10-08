@@ -1,15 +1,14 @@
-function Header( {cardCount }) {
+function Header() {
+    const cartCount = 0 // becomes state in Part C
     return (
-        <header style={{ display:'flex', justifyContent: 'space-between', padding: '1rem', background: '#046A38', color: '#fff'}}>
-            <h1>CampusEats</h1>
-
-            <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <span>Vendors</span>
-                <span>My Orders</span>
-                <span style={{ background: '#024022', padding: '0.3rem 0.6rem', borderRadius: '12px'}}>
-                    Cart <strong>{cartCount}</strong>
-
-                </span>
+        <header className="header">
+            <h1 className="logo">CampusEats</h1>
+            <nav className="nav">
+                <a href="#">Vendors</a>
+                <a href="#">My Orders</a>
+                <a href="#" className="cart">
+                    Cart <span className="badge">{cartCount}</span>
+                </a>
             </nav>
         </header>
     )

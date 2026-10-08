@@ -1,53 +1,26 @@
-import { useState } from 'react'
-import vendors from './data/vendors'
-import Header from './components/Header'
-import VendorCard from './components/VendorCard'
-import MenuList from './components/MenuList'
-import Footer from './components/Footer'
-
+import Header from './components/Header.jsx'
+import VendorCard from './components/VendorCard.jsx'
+import MenuItemCard from './components/MenuItemCard.jsx'
+import Footer from './components/Footer.jsx'
 function App() {
-  const [selectedVendorId, setSelectedVendorId] = useState(vendors[0].id)
-  const [cart, setCart] = useState([])
-
-  // Find the vendor selected by the user
-  const selectedVendor = vendors.find((v) => v.id === selectedVendorId)
-
-  // Add item to cart immutably
-  const handleAddToCart = (item) => {
-    setCart((prev) => [...prev, item])
-  }
-
-  return (
-    <>
-      <Header cartCount={cart.length} />
-
-      <main className="container">
-        <section>
-          <h2>Choose a vendor</h2>
-          <div className="grid">
-            {vendors.map((vendor) => (
-              <VendorCard
-                key={vendor.id}
-                vendor={vendor}
-                isSelected={vendor.id === selectedVendorId}
-                onSelect={(id) => setSelectedVendorId(id)}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section style={{ marginTop: '2rem' }}>
-          <h2>Menu: {selectedVendor ? selectedVendor.name : ''}</h2>
-          <MenuList
-            items={selectedVendor ? selectedVendor.menu : []}
-            onAdd={handleAddToCart}
-          />
-        </section>
-      </main>
-
-      <Footer />
-    </>
-  )
+ return (
+ <>
+ <Header />
+ <main className="container">
+ <section>
+ <h2 className="section-title">Today's vendors</h2>
+ <VendorCard />
+ </section>
+ <section>
+ <h2 className="section-title">Popular items</h2>
+ <div className="grid">
+ <MenuItemCard />
+ </div>
+ </section>
+ </main>
+ <Footer />
+ </>
+ )
 }
 
 export default App
