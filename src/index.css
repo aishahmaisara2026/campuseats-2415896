@@ -18,7 +18,7 @@ body { margin: 0; }
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  background: var(--green);
+  background: yellowgreen;
   color: #fff;
 }
 .logo { margin: 0; font-size: 1.4rem; }
@@ -59,7 +59,7 @@ body { margin: 0; }
 .status.closed { background: #fdecea; color: #b3261e; }
 .btn {
   width: 100%; padding: 0.55rem; border: 0; border-radius: 8px;
-  background: var(--green); color: #fff; font-weight: 600; cursor: pointer;
+  background: yellowgreen; color: #fff; font-weight: 600; cursor: pointer;
 }
 .btn:disabled { background: #c5cbd3; cursor: not-allowed; }
 
