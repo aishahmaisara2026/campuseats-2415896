@@ -14,7 +14,7 @@
             { "id":"2415896-aminah-6", "name":"Teh Tarik", "description":"Classic Malaysian tilk tea", "price":2.5, "category":"Drinks", "available": true, "tags":["Sweet","Milk tea"] },
             { "id":"2415896-aminah-7", "name":"Milo", "description":"Chocolate malt drink", "price":2.5, "category":"Drinks", "available": true, "tags":["Sweet","Malaysian chocolate drink"] },
             { "id":"2415896-aminah-8", "name":"Teh O", "description":"Classic Malaysian tea", "price":1.5, "category":"Drinks", "available": true, "tags":["Sweet","Malaysian tea"] },
-            { "id":"2415896-aminah-9", "name":"Donut Susu", "description":"Milk-glazed donut", "price":0.5, "category":"Dessert", "available": true, "tags":["Sweet and milky","Malaysian dessert"] },
+            { "id":"2415896-aminah-9", "name":"Donut Susu", "description":"Milk-glazed donut", "price":0.5, "category":"Dessert", "available": true, "tags":["Sweet and milky","Malaysian dessert"] }
         
         ]
     },
@@ -29,7 +29,7 @@
             { "id":"2415896-hafsah-2", "name":"Ikan Keli Gepuk", "description":"White rice with catfish, sambal, cabbage and tempe", "price":6.5, "category":"Rice", "available": true, "tags":["Spicy","Indonesian cuisine"] },
             { "id":"2415896-hafsah-3", "name":"Bubur Ayam", "description":"Chicken rice porridge with anchovies and brocolli", "price":5.0, "category":"Porridge", "available": true, "tags":["Warm soup","Asian style"] },
             { "id":"2415896-hafsah-4", "name":"Sirap Limau", "description":"Rose syrup with lime", "price":1.5, "category":"Drinks", "available": true, "tags":["Sweet and sour","Cordial drink"] },
-            { "id":"2415896-hafsah-5", "name":"Karipap", "description":"Potato filling inside a golden, deep-fried pastry pocket", "price":0.5, "category":"Dessert", "available": true, "tags":["Savory and spicy","Malaysian traditional dessert"] },
+            { "id":"2415896-hafsah-5", "name":"Karipap", "description":"Potato filling inside a golden, deep-fried pastry pocket", "price":0.5, "category":"Dessert", "available": true, "tags":["Savory and spicy","Malaysian traditional dessert"] }
         ]
     },
     {
