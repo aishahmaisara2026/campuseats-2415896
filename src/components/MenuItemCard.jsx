@@ -16,7 +16,7 @@ function MenuItemCard({ item, onAdd }) {
                 fontSize: '0.75rem',
                 padding: '2px 8px',
                 borderRadius: '12px',
-                fontWeight: '500'
+                fontWeight: '600'
               }}
             >
               {tag}
@@ -26,7 +26,7 @@ function MenuItemCard({ item, onAdd }) {
       </div>
 
       <h3>{item.name}</h3>
-      <p>{item.description}</p>
+      <p className="muted">{item.description}</p>
       <p className="price">RM {Number(item.price || 0).toFixed(2)}</p>
       
       <button 

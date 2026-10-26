@@ -38,7 +38,7 @@ function handleSubmit(event) {
     const found = validate(values)
     setErrors(found)
     // TODO: if found has no keys, call onPlaceOrder(values)
-    if (Object.keys(foundErrors).length === 0) {
+    if (Object.keys(found).length === 0) {
       onPlaceOrder(values)
     }
 }
@@ -52,8 +52,8 @@ return (
         <label htmlFor="mahallah">Mahallah</label>
         <select id="mahallah" name="mahallah" value={values.mahallah}
         onChange={handleChange}>
-            <option value="">Select…</option>
-            {MAHALLAHS.map((m) => <option key={m} value={m}>{m}</option>)}
+        <option value="">Select…</option>
+        {MAHALLAHS.map((m) => <option key={m} value={m}>{m}</option>)}
         </select>
     {/* TODO: show errors.mahallah */}
         {errors.mahallah && <p className="field-error">{errors.mahallah}</p>}

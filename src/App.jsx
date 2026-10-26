@@ -5,6 +5,7 @@ import CartPage from './components/CartPage.jsx'
 import { Loading, ErrorMessage } from './components/Status.jsx'
 import MenuItemCard from './components/MenuItemCard.jsx'
 import VendorCard from './components/VendorCard.jsx'
+import MenuList from './components/MenuList.jsx'
 
 function App() {
   const [vendors, setVendors] = useState([])
@@ -95,7 +96,7 @@ function App() {
     selectedTags.every((t) => item.tags?.includes(t))
   ) || []
 
-  const ALL_TAGS = ['Halal', 'Spicy', 'Vegetarian']
+  const ALL_TAGS = ['Sweet', 'Spicy', "Chef's Recommend"]
 
   let content
   if (view === 'cart') {
@@ -143,6 +144,11 @@ function App() {
           <section>
             <h2>Menu - {selectedVendor.name}</h2>
             
+            <MenuList
+            items={selectedVendor.menu || []}
+            onAdd={handleAddToCart}
+          />
+
             {/* Feature 6: Tag Filters */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
               <strong>Filter by tags:</strong>

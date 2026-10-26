@@ -2,7 +2,7 @@ import MenuItemCard from './MenuItemCard'
 
 function MenuList({ items, onAdd }) {
   if (!items || items.length === 0) {
-    return <p className="empty-msg">No items on this menu yet.</p>
+    return <p className="empty-msg">Opening Soon!</p>
   }
 
   return (

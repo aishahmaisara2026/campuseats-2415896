@@ -11,7 +11,7 @@ function CartPage({ cart, onChangeQty, onRemove, onPlaceOrder }) {
   return (
     <div className="cart-layout">
       <div className="card">
-        <ul className="cart-list">
+        <ol className="cart-list">
           {cart.map((line) => (
             <CartItem 
               key={line.item.id} 
@@ -20,7 +20,7 @@ function CartPage({ cart, onChangeQty, onRemove, onPlaceOrder }) {
               onRemove={onRemove} 
             />
           ))}
-        </ul>
+        </ol>
         <p className="cart-total">Total: RM {total.toFixed(2)}</p>
       </div>
       <CheckoutForm onPlaceOrder={onPlaceOrder} />

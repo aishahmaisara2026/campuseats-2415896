@@ -37,7 +37,7 @@
         "name": "Syukur Cafe",
         "location": "Mahallah Asiah",
         "openHours": "8:00 AM - 9:00 PM",
-        "isOpen" : true,
+        "isOpen" : false,
         "menu": [] 
     },
     
