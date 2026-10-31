@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-const MAHALLAHS = ['Ali', 'Aminah', 'Faruq', 'Asiah', 'Bilal', 'Hafsa', 'Uthman',
-    'Zubair']
+const MAHALLAHS = ['Ali', 'Aminah', 'Asma', 'Asiah', 'Bilal', 'Faruq', 'Hafsa', 'Halimah', 'Maryam', 'Nusaibah',
+    'Salahuddin','Sumayyah','Safiyyah','Uthman','Zubair']
 
 // A plain function: values in, errors object out. Empty object = valid.
 function validate(values) {

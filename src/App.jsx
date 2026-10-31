@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react'
 import Header from './components/Header.jsx'
 import CartPage from './components/CartPage.jsx'
 import { Loading, ErrorMessage } from './components/Status.jsx'
-import MenuItemCard from './components/MenuItemCard.jsx'
 import VendorCard from './components/VendorCard.jsx'
 import MenuList from './components/MenuList.jsx'
+import Footer from './components/Footer.jsx'
 
 function App() {
   const [vendors, setVendors] = useState([])
@@ -140,15 +140,11 @@ function App() {
           </div>
         </section>
 
+{/*Selectoed Vendor Menu*/}
         {selectedVendor && (
           <section>
             <h2>Menu - {selectedVendor.name}</h2>
             
-            <MenuList
-            items={selectedVendor.menu || []}
-            onAdd={handleAddToCart}
-          />
-
             {/* Feature 6: Tag Filters */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
               <strong>Filter by tags:</strong>
@@ -163,11 +159,11 @@ function App() {
               ))}
             </div>
 
-            <div className="grid">
-              {filteredMenu.map((item) => (
-                <MenuItemCard key={item.id} item={item} onAdd={handleAddToCart} />
-              ))}
-            </div>
+{/*Render MenuList by filter tags*/}
+            <MenuList
+            items={selectedVendor.menu || []}
+            onAdd={handleAddToCart}
+            />
           </section>
         )}
       </>
@@ -182,6 +178,7 @@ function App() {
         onShowCart={() => setView('cart')} 
       />
       <main className="container">{content}</main>
+      <Footer /> 
     </>
   )
 }
