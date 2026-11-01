@@ -1,14 +1,21 @@
 import {useLocalStorage} from '../hooks/useLocalStorage'
 import {CartContext} from './cart-context'
+import {useState} from 'react'
 
 export function CartProvider ({children}) {
     const [cart, setCart] = useLocalStorage ('campuseats-cart', [])
     const [orders, setOrders] = useLocalStorage ('campuseats-orders',[])
 
+    const [toastMessage, setToastMessage] = useState('')
+    const [showToast, setShowToast] = useState(false)
+
     const count =cart.reduce ((sum,item) => sum + item.quantity, 0)
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
     const addToCart = (item, vendorId, vendorName) => {
+
+        const updatedCount = count + 1
+
         setCart((prevCart) => {
             const existingIndex = prevCart.findIndex((i) => i.id ===item.id)
             if (existingIndex > -1) {
@@ -19,6 +26,16 @@ export function CartProvider ({children}) {
                 return [...prevCart, {...item, quantity:1, vendorId, vendorName}]
             }
         })
+
+        const itemLabel = updatedCount === 1 ? 'item' : 'items'
+        setToastMessage(`${updatedCount} ${itemLabel} added to the cart`)
+        setShowToast(true)
+
+        // Automatically hide toast after 3 seconds
+        setTimeout(() => {
+            setShowToast(false)
+        }, 3000)
+
     }
 
         const changeQty = (itemId, delta) => {
@@ -41,7 +58,7 @@ export function CartProvider ({children}) {
             if (cart.length === 0) return null
 
             const newOrder = {
-                id: 'ORD-${Date.now()}',
+                id: `ORD-${Date.now()}`,
                 date: new Date().toISOString(),
                 items: [...cart], //food that has been add by customer
                 total: total,
@@ -65,5 +82,13 @@ export function CartProvider ({children}) {
             placeOrder,
         }
 
-        return <CartContext.Provider value = {value} >{children}</CartContext.Provider>
+        return <CartContext.Provider value = {value} >
+            {children}
+            {/*Floating Toast Pop-up Notification Component */}
+            {showToast && (
+                <div className="toast-notification">
+                    <span>🛒 {toastMessage}</span>
+                 </div>
+            )}
+        </CartContext.Provider>
 }
