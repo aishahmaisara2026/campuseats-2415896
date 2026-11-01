@@ -3,8 +3,20 @@ import { useState } from 'react'
 const MAHALLAHS = ['Ali', 'Aminah', 'Asma', 'Asiah', 'Bilal', 'Faruq', 'Hafsa', 'Halimah', 'Maryam', 'Nusaibah',
     'Salahuddin','Sumayyah','Safiyyah','Uthman','Zubair']
 
+function parseTimeString(timeStr) {
+    if (!timeStr) return ''
+    const [time, modifier] = timeStr.trim().split(' ')
+    let [hours,minutes] = time.split(':')
+
+    let h = parseInt(hours, 10)
+    if (modifier === 'pm' && h < 12) h += 12
+    if (modifier === 'am' && h === 12) h = 0
+
+    return `${String(h).padStart(2, '0')}:${minutes}`
+}
+
 // A plain function: values in, errors object out. Empty object = valid.
-function validate(values) {
+function validate(values, cart=[], vendors=[]) {
     const errors = {}
     if (values.name.trim().length < 3){
         errors.name = 'Enter your name (at least 3 characters).'
@@ -17,13 +29,29 @@ function validate(values) {
     // TODO: pickupTime must be between '07:00' and '22:00' (strings compare fine)
     if (!values.pickupTime) {
     errors.pickupTime = 'Choose a pickup time.'
-    } else if (values.pickupTime < '07:00' || values.pickupTime > '22:00') {
-    errors.pickupTime = 'Pickup time must be between 07:00 and 22:00.'
+    } else {
+        // 1. Get unique vendor ID present in the current cart
+        const vendorIdsInCart = [...new Set(cart.map((line) => line.vendorId || line.item?.vendorId))]
+
+        // 2. Validate against operating hours of every vendor in cart
+        for (const vId of vendorIdsInCart) {
+            const vendor = vendors.find((v) => v.id === vId)
+            if (vendor && vendor.openHours) {
+                const [startRaw, endRaw] = vendor.openHours.split('-').map((s) => s.trim())
+                const openTime = parseTimeString(startRaw)
+                const closeTime = parseTimeString(endRaw)
+
+                if (values.pickupTime < openTime || values.pickupTime > closeTime) {
+                    errors.pickupTime = `${vendor.name} is closed at ${values.pickupTime}. Operating hours: ${vendor.openHours}`
+                    break // Stop on first failing vendor match
+                }
+            }
+        }
     }
     return errors
 }
 
-function CheckoutForm({ onPlaceOrder }) {
+function CheckoutForm({ onPlaceOrder, cart=[], vendors =[]}) {
     const [values, setValues] = useState({ name: '', mahallah: '', pickupTime: '' })
     const [errors, setErrors] = useState({})
 
@@ -35,7 +63,7 @@ function handleChange(event) {
 
 function handleSubmit(event) {
     event.preventDefault() // stop the page reloading
-    const found = validate(values)
+    const found = validate(values, cart, vendors)
     setErrors(found)
     // TODO: if found has no keys, call onPlaceOrder(values)
     if (Object.keys(found).length === 0) {
@@ -45,7 +73,7 @@ function handleSubmit(event) {
 
 return (
     <form className="card form" onSubmit={handleSubmit} noValidate>
-        <h3>Checkout</h3>
+        <h3 style={{margin:'0 0 1rem', padding: '0rem'}}>Checkout</h3>
         <label htmlFor="name">Name</label>
         <input id="name" name="name" value={values.name} onChange={handleChange} />
         {errors.name && <p className="field-error">{errors.name}</p>}

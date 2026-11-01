@@ -1,12 +1,15 @@
 function MenuItemCard({ item, onAdd }) {
+  const isAvailable = item.available !== false
   return (
     <div className="menu-item-card">
       <div className="card-header">
-        <span className="category-tag">{item.category}</span>
+        {item.category && <span className="category-tag">{item.category}
+          </span>}
         
         {/* Render dietary tag chips */}
+        {item.tags && item.tags.length > 0 && (
         <div className="tags-container" style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', margin: '4px 0' }}>
-          {item.tags && item.tags.map((tag) => (
+          {item.tags.map((tag) => (
             <span 
               key={tag} 
               className="chip"
@@ -23,6 +26,7 @@ function MenuItemCard({ item, onAdd }) {
             </span>
           ))}
         </div>
+        )}
       </div>
 
       <h3>{item.name}</h3>
@@ -31,10 +35,10 @@ function MenuItemCard({ item, onAdd }) {
       
       <button 
         className="btn" 
-        disabled={!item.available}
+        disabled={!isAvailable}
         onClick={() => onAdd(item)}
       >
-        {item.available ? 'Add to cart' : 'Sold out'}
+        {isAvailable ? 'Add to cart' : 'Sold out'}
       </button>
     </div>
   )

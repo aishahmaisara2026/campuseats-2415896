@@ -2,7 +2,7 @@ function VendorCard({ vendor, isSelected, onSelect }) {
   return (
     <div 
       className={`vendor-card ${isSelected ? 'selected' : ''}`}
-      onClick={() => onSelect(vendor.id)}
+      onClick={() => onSelect?.(vendor.id)}
       style={{ cursor: 'pointer' }}
     >
       <div className="thumb">{vendor.name.charAt(0)}</div>

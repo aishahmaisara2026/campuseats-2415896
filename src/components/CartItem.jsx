@@ -1,6 +1,9 @@
 // One row in the cart. It shows data and reports clicks upward; it owns no state.
-function CartItem({ line, onChangeQty, onRemove }) {
-  const { item, qty } = line
+function CartItem({ line ={}, onChangeQty, onRemove }) {
+  const { item={}, qty=0 } = line
+
+  if(!item.name) return null
+  
   return (
     <li className="cart-line">
       <div>
