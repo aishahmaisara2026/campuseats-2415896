@@ -3,7 +3,7 @@
         "id": "2415896-kafe-aminah",
         "name": "Minha Cafe",
         "location": "Mahallah Aminah",
-        "openHours": "7:00 AM - 9:00 PM",
+        "openHours": "7:00 am - 9:00 pm",
         "isOpen" : true,
         "menu": [
             { "id":"2415896-aminah-1", "name":"Nasi Goreng Kampung", "description":"Fried rice with anchovies and chillies", "price":6.5, "category":"Rice", "available": true, "tags":["Chef's Recommend","Malaysian style fried rice"] },
@@ -22,7 +22,7 @@
         "id": "2415896-kafe-hafsah",
         "name": "Maya Food&Drink",
         "location": "Mahallah Hafsah",
-        "openHours": "8:00 AM - 9:00 PM",
+        "openHours": "8:00 am - 9:00 pm",
         "isOpen" : true,
         "menu": [
             { "id":"2415896-hafsah-1", "name":"Ayam Gepuk", "description":"White rice with chicken, sambal, cabbage and tempe", "price":6.5, "category":"Rice", "available": true, "tags":["Spicy","Indonesian cuisine"] },
@@ -36,7 +36,7 @@
         "id": "2415896-kafe-asiah",
         "name": "Syukur Cafe",
         "location": "Mahallah Asiah",
-        "openHours": "8:00 AM - 9:00 PM",
+        "openHours": "8:00 am - 9:00 pm",
         "isOpen" : false,
         "menu": [] 
     },
