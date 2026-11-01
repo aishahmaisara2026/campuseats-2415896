@@ -1,11 +1,11 @@
-import {useState,useEffect,useCallBack} from 'react'
+import {useState,useEffect,useCallback} from 'react'
 
 export function useVendors(){
     const [vendors, setVendors] = useState([])
     const [loading,setLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    const fetchVendors = useCallBack(async() => {
+    const fetchVendors = useCallback(async() => {
         setLoading(true)
         setError(null)
         try{
