@@ -10,12 +10,14 @@ export function VendorPage() {
     const {id} = useParams()
     const {vendors, loading, error}= useVendors()
 
-    const [selectedTags, setSelectedTags] = useState([])
-
-    const {addToCart} = useCart() /*when sutomer add food to cart
+    const {addToCart} = useCart() /*when customer add food to cart
      the data will be send here to be updated to the checkout form*/
     const [searchParams, setSearchParams] = useSearchParams()
     const q = searchParams.get('q') || ''
+
+    //Read selected tags from the URL (?tags=Spicy,Sweet)[Personal feature]
+    const rawTags = searchParams.get('tags')
+    const selectedTags = rawTags ? rawTags.split(',') : []
 
      if (loading) return
      <p className="muted"> Loading Menu...</p>
@@ -34,12 +36,42 @@ export function VendorPage() {
      }
 
      const toggleTag = (tag) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    )
+        let updatedTags
+        if (selectedTags.includes(tag)) {
+            // Untick tag: remove it from selectedTags
+            updatedTags = selectedTags.filter((t) => t !== tag)
+        } else {
+            // Tick tag: add it to selectedTags
+            updatedTags = [...selectedTags, tag]
+        }
+
+        // Build new URL search parameters object
+        const newParams = {}
+
+        // Preserve current search query string if present
+        if (q) newParams.q = q
+
+        // Attach comma-separated tags string if any tags are ticked
+        if (updatedTags.length > 0) {
+            newParams.tags = updatedTags.join(',')
+        }
+
+        // Update the URL
+        setSearchParams(newParams)
+    }
+    //to update the seacrh input so that it show the current tag that user click
+    const handleSearchChange = (e) => {
+        const val = e.target.value
+        const newParams = {}
+
+        if (val) newParams.q = val
+        if (selectedTags.length > 0) newParams.tags = selectedTags.join(',')
+
+        setSearchParams(newParams)
     }
 
-    // Filter items matching selected tags
+
+    // Filter items matching selected tags or search Bar
     const filteredMenu = (vendor.menu || []).filter((item) => {
 
         const matchSeacrh = item.name.toLowerCase().includes(q.toLowerCase())
@@ -65,8 +97,7 @@ export function VendorPage() {
                     type="text"
                     placeholder="Search menu..."
                     value={q}
-                    onChange={(e) =>
-                        setSearchParams(e.target.value ? { q: e.target.value } : {})
+                    onChange={handleSearchChange
                     }
                     style={{
                         padding: '0.5rem',

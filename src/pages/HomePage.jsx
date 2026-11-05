@@ -18,7 +18,7 @@ export function HomePage() {
             <h2>Available Vendors</h2>
             <div className="grid">
                 {vendors.map((vendor) =>
-                /*Wrap VendorCard in a link so when click it opens to the vendor.id*/
+                /*Wrap VendorCard in a link so when click it opens to the vendor.id at browser*/
                 (<Link 
                 key={vendor.id} 
                 to={`/vendor/${vendor.id}`} 

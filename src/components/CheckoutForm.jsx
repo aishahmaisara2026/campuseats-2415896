@@ -77,6 +77,7 @@ return (
         <label htmlFor="name">Name</label>
         <input id="name" name="name" value={values.name} onChange={handleChange} />
         {errors.name && <p className="field-error">{errors.name}</p>}
+        
         <label htmlFor="mahallah">Mahallah</label>
         <select id="mahallah" name="mahallah" value={values.mahallah}
         onChange={handleChange}>

@@ -27,7 +27,7 @@ export function CartProvider ({children}) {
             }
         })
 
-        const itemLabel = updatedCount === 1 ? 'item' : 'items'
+        const itemLabel = updatedCount === 1 ? 'item' : 'items' //if item is 1 than= item if 2/more = items
         setToastMessage(`${updatedCount} ${itemLabel} added to the cart`)
         setShowToast(true)
 

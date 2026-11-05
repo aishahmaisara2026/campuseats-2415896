@@ -20,7 +20,7 @@ export function CartPage() {
     if (cart.length === 0){
         return (
             <div className ="box">
-                <h2>Cart is empty</h2>
+                <h2>Cart Is Empty</h2>
                 <p>Choose what you want to eat to place an order!</p>
             </div>
         )
@@ -41,7 +41,7 @@ export function CartPage() {
                         onRemove={removeFromCart}/>
                     ))}
                 </ul>
-                <h4 className="total">Total: RM {total.toFixed(2)}</h4>
+                <h3 className="total">Total: RM {total.toFixed(2)}</h3>
             </div>
             <CheckoutForm onPlaceOrder={handlePlaceOrder}
             cart={cart}
