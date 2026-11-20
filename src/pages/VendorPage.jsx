@@ -3,6 +3,8 @@ import {useVendors} from '../hooks/useVendors'
 import {useCart} from '../hooks/useCart'
 import MenuList from '../components/MenuList'
 import {useState} from 'react'
+import {useLocalStorage} from '../hooks/useLocalStorage'
+import {useAuth} from '../hooks/useAuth'
 
 const ALL_TAGS = ['Spicy', 'Sweet', "Chef's Recommend"]
 
@@ -10,14 +12,20 @@ export function VendorPage() {
     const {id} = useParams()
     const {vendors, loading, error}= useVendors()
 
+    const {user} = useAuth() /*Get the current sign in user*/
+    const [guestTags, setGuestTags] = useState([]) 
+    /*Guest data save in memory only not in local storage */
+    const [saveUserTags, setSaveUserTags] = useLocalStorage
+    ( user ? `ce-diet-${user.uid}`:`ce-diet-guest`,[])
+
     const {addToCart} = useCart() /*when customer add food to cart
      the data will be send here to be updated to the checkout form*/
     const [searchParams, setSearchParams] = useSearchParams()
     const q = searchParams.get('q') || ''
 
-    //Read selected tags from the URL (?tags=Spicy,Sweet)[Personal feature]
-    const rawTags = searchParams.get('tags')
-    const selectedTags = rawTags ? rawTags.split(',') : []
+    /* to save the tags for login user and unsave for guest*/
+    const selectedTags = user ? saveUserTags : guestTags
+    const setSelectedTags = user ? setSaveUserTags : setGuestTags
 
      if (loading) return
      <p className="muted"> Loading Menu...</p>
@@ -36,40 +44,15 @@ export function VendorPage() {
      }
 
      const toggleTag = (tag) => {
-        let updatedTags
-        if (selectedTags.includes(tag)) {
-            // Untick tag: remove it from selectedTags
-            updatedTags = selectedTags.filter((t) => t !== tag)
-        } else {
-            // Tick tag: add it to selectedTags
-            updatedTags = [...selectedTags, tag]
-        }
-
-        // Build new URL search parameters object
-        const newParams = {}
-
-        // Preserve current search query string if present
-        if (q) newParams.q = q
-
-        // Attach comma-separated tags string if any tags are ticked
-        if (updatedTags.length > 0) {
-            newParams.tags = updatedTags.join(',')
-        }
-
-        // Update the URL
-        setSearchParams(newParams)
-    }
-    //to update the seacrh input so that it show the current tag that user click
+        setSelectedTags((prev) => prev.includes(tag) ?
+        prev.filter((t) => t !== tag) : [...prev,tag])
+     }
+        
+    //to update the seacrh bar so that it show the food that user look
     const handleSearchChange = (e) => {
         const val = e.target.value
-        const newParams = {}
-
-        if (val) newParams.q = val
-        if (selectedTags.length > 0) newParams.tags = selectedTags.join(',')
-
-        setSearchParams(newParams)
+        setSearchParams(val ? {q: val}:{})
     }
-
 
     // Filter items matching selected tags or search Bar
     const filteredMenu = (vendor.menu || []).filter((item) => {
@@ -78,7 +61,7 @@ export function VendorPage() {
         const matchTag= selectedTags.length === 0 || selectedTags.every((tag) =>
         item.tags?.includes(tag))
 
-            return matchSeacrh && matchTag
+        return matchSeacrh && matchTag
     })
 
      const handleAddToCart = (item) => {

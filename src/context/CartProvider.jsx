@@ -10,7 +10,7 @@ export function CartProvider ({children}) {
     const [showToast, setShowToast] = useState(false)
 
     const count =cart.reduce ((sum,item) => sum + item.quantity, 0)
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    const total = cart.reduce((sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 0),0)
 
     const addToCart = (item, vendorId, vendorName) => {
 

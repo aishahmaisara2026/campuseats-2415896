@@ -19,8 +19,10 @@ export function OrdersPage (){
                 <div key={order.id} className="card order-card">
                     <h3>Order ID: {order.id}</h3>
                     <p><strong>Status:</strong> {order.status}</p>
-                    <p><strong>Pickup Time:</strong> {order.customer.pickupTime}</p>
-                    <p><strong>Deliver to:</strong> {order.customer.name} ({order.customer.mahallah})</p>
+                    <p><strong>Pickup Time:</strong> {' '} 
+                    {order.customer?.pickupTime ?? order.pickupTime ??'N/A'}</p>
+                    <p><strong>Deliver to:</strong> {order.customer?.name ?? order.name ?? 'Guest'} 
+                    ({order.customer?.mahallah ?? order.mahallah ?? '-'})</p>
                     <ul>
                         {order.items?.map((item) => (
                             <li key={item.id}>
@@ -28,7 +30,7 @@ export function OrdersPage (){
                                 </li>
                         ))}
                     </ul>
-                    <p><strong>Total:</strong> RM {order.total.toFixed(2)}</p>
+                    <p><strong>Total:</strong> RM {order.total?.toFixed(2)}</p>
                 </div>
             ))}
         </div>
