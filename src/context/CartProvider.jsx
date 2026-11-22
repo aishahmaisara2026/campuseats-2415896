@@ -3,8 +3,7 @@ import {CartContext} from './cart-context'
 import {useState} from 'react'
 
 export function CartProvider ({children}) {
-    const [cart, setCart] = useLocalStorage ('campuseats-cart', [])
-    const [orders, setOrders] = useLocalStorage ('campuseats-orders',[])
+    const [cart, setCart] = useLocalStorage('campuseats-cart', [])
 
     const [toastMessage, setToastMessage] = useState('')
     const [showToast, setShowToast] = useState(false)
@@ -34,8 +33,8 @@ export function CartProvider ({children}) {
         // Automatically hide toast after 3 seconds
         setTimeout(() => {
             setShowToast(false)
-        }, 3000)
-
+        }, 
+        3000)
     }
 
         const changeQty = (itemId, delta) => {
@@ -54,35 +53,21 @@ export function CartProvider ({children}) {
             setCart((prevCart) => prevCart.filter((item) => item.id !== itemId)) //keep every dish whose ID is not = deleted ID
         }
 
-        const placeOrder = (orderDetails) => {
-            if (cart.length === 0) return null
-
-            const newOrder = {
-                id: `ORD-${Date.now()}`,
-                date: new Date().toISOString(),
-                items: [...cart], //food that has been add by customer
-                total: total,
-                customer: orderDetails, // name,mahallah,time
-                status: 'Preparing',
-            }
-
-            setOrders((prevOrders)=> [newOrder, ...prevOrders])
-            setCart([]) // to clear cart after checkout
-            return newOrder.id
+        function clearCart() {
+            setCart([])
         }
 
         const value = {
             cart, //the list of food that customer has order
-            orders,
             count, // the number of food in the order
             total,
             addToCart,
             changeQty,
             removeFromCart,
-            placeOrder,
+            clearCart,
         }
 
-        return <CartContext.Provider value = {value} >
+        return (<CartContext.Provider value = {value} >
             {children}
             {/*Floating Toast Pop-up Notification Component */}
             {showToast && (
@@ -91,4 +76,5 @@ export function CartProvider ({children}) {
                  </div>
             )}
         </CartContext.Provider>
+        )
 }

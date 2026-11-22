@@ -51,8 +51,8 @@ function validate(values, cart=[], vendors=[]) {
     return errors
 }
 
-function CheckoutForm({ onPlaceOrder, cart=[], vendors =[]}) {
-    const [values, setValues] = useState({ name: '', mahallah: '', pickupTime: '' })
+function CheckoutForm({ defaultName= '',onPlaceOrder, cart=[], vendors =[]}) {
+    const [values, setValues] = useState({ name: defaultName, mahallah: '', pickupTime: '' })
     const [errors, setErrors] = useState({})
 
 // One handler for every input: the input's name matches a key in values.

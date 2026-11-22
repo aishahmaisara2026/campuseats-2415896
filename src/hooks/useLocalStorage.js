@@ -12,12 +12,25 @@ export function useLocalStorage(key, initialValue) {
     })
 
     useEffect(() => {
-        try{
-            localStorage.setItem(key, JSON.stringify(value))
-        } catch(error){
-            console.error('Error setting localStorage "${key}":', error)
-        }
-    }, [key,value])
+    try {
+      const saved = localStorage.getItem(key)
+      setValue(saved !== null ? JSON.parse(saved) : initialValue)
+    } catch {
+      setValue(initialValue)
+    }
+    }, [key])
 
-    return [value, setValue]
+    const setStoredValue = (newValue) => {
+    setValue((prev) => {
+      const resolved = typeof newValue === 'function' ? newValue(prev) : newValue
+      try {
+        localStorage.setItem(key, JSON.stringify(resolved))
+      } catch (error) {
+        console.error(`Error setting localStorage "${key}":`, error)
+      }
+      return resolved
+    })
+    }
+
+  return [value, setStoredValue]
 }

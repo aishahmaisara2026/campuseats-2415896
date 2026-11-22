@@ -1,30 +1,28 @@
-import {useState,useEffect,useCallback} from 'react'
+import {useState,useEffect} from 'react'
+import {subscribeToVendors} from '../services/vendors.js'
 
 export function useVendors(){
     const [vendors, setVendors] = useState([])
     const [loading,setLoading] = useState(true)
     const [error, setError] = useState(null)
-
-    const fetchVendors = useCallback(async() => {
-        setLoading(true)
-        setError(null)
-        try{
-            const response = await fetch ('/api/vendors.json')
-            if (!response.ok) {
-                throw new error ('Failed to fetch vendors (${response.status})')
-            }
-            const data = await response.json()
-            setVendors(data) 
-        } catch (err) {
-            setError(err.message || 'An error occured while loading vendors')
-        } finally {
-            setLoading(false)
-        }
-    },[])
+    const [reloadKey, setReloadKey] = useState(0)
 
     useEffect(() => {
-        fetchVendors()
-    }, [fetchVendors])
+        setLoading(true)
+        setError(null)
+        const unsubscribe = subscribeToVendors(
+            (data) => {
+                setVendors(data)
+                setLoading(false)
+            },
+            (err) => {
+                setError(err.message)
+                setLoading(false)
+            }
+        )
+        return unsubscribe
+    }, [reloadKey])
 
-    return {vendors, loading, error, reload: fetchVendors}
+    return {vendors, loading, error, reload: () => 
+        setReloadKey((k) =>+1 )}
 }

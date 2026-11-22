@@ -1,19 +1,31 @@
+
+import { useState } from 'react'
 import {useNavigate} from 'react-router'
 import {useCart} from '../hooks/useCart'
-import { useVendors } from '../hooks/useVendors'
-import CartItem from '../components/CartItem'
+import { useVendors } from '../hooks/useVendors.js'
 import CheckoutForm from '../components/CheckoutForm'
+import CartItem from '../components/CartItem'
+import { useAuth } from '../hooks/useAuth.js'
+import { placeOrders } from '../services/orders.js'
 
 export function CartPage() {
     //Read global cart state & actions from Context
-    const {cart, total,changeQty,removeFromCart,placeOrder} = useCart()
+    const {cart, total,changeQty,removeFromCart,clearCart} = useCart()
+    const {user}= useAuth()
     const {vendors} = useVendors()
     const navigate = useNavigate()
+    const [error,setError] = useState('')
 
     //Callback functions passed down to CheckoutForm
-    const handlePlaceOrder = (formValues) => {
-        placeOrder(formValues)
-        navigate('/orders')
+    async function handlePlaceOrder(details) {
+        setError('')
+        try {
+            await placeOrders(user, cart, details)
+            clearCart()
+            navigate('/orders')
+        } catch(err) {
+        setError(`Could not place the order: ${err.message}`)
+        }
     }
 
     //If cart is empty
@@ -43,7 +55,9 @@ export function CartPage() {
                 </ul>
                 <h3 className="total">Total: RM {total.toFixed(2)}</h3>
             </div>
-            <CheckoutForm onPlaceOrder={handlePlaceOrder}
+            {error && <p className="field-error" role="alert">{error}</p>}
+            <CheckoutForm defaultName={user?.displayName ?? ''} 
+            onPlaceOrder={handlePlaceOrder}
             cart={cart}
             vendors={vendors}
             />
